@@ -1,0 +1,137 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Helvetica','sans-serif';
+
+}
+body{
+    font-family: 'Helvetica','Segoe UI';
+    
+
+}
+header{
+    width: 100%;
+    height: 100vh;
+    background-image: url(/Proyecto_MVC/MVC-main/View/img/Fondo4.jpg);
+    background-size: cover;
+    background-position: center;
+
+    
+}
+main{
+    background-color: rgb(0, 0, 0);
+}
+.Contenido{
+    background-color: white;
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.nav{
+    position: fixed;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:1.5em;
+    transition: all 0.5s ease;
+    z-index: 99;
+}
+.nav.active{
+    background-color: black;
+    padding: 15px;
+}
+
+.logo{
+    font-size: 1.5em;
+    color: #fff;
+    font-weight: 100;
+}
+.menu{
+    display: flex; 
+}
+.menu li{
+    list-style: none;
+}
+.menu li a{
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    font-size:1.5em;
+    font-weight: 500;
+    margin-left: 40px;
+
+}
+
+.menu a::after{
+    content:'';
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    height: 3px;
+    border-radius: 5px;
+    left: 0;
+    bottom: -6px;
+    transform: scalex(0);
+    transform-origin: right;
+    transition: transform 0.5s; /*Este*/
+}
+.menu a:hover::after{  /*Este*/
+    transform: scaleX(1);
+    transform-origin: left;
+}
+.menu .btnLogin-popup{
+    width: 130px;
+    height: 50px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    outline:none;
+    border-radius: 6px;
+    cursor:pointer;
+    font-size: 1.1em;
+    color:#fff;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+.menu .dropdown-menu{
+    background-color: transparent;
+    border-radius: 6px;
+    cursor:pointer;
+    color:#fff;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.menu .dropdown-menu:hover{
+    background-color: transparent;
+    color:#162938;
+}
+
+.menu .btnLogin-popup:hover{
+    background-color: #fff;
+    color:#162938;
+
+}
+.PiePagina{
+    height: 100px;
+}
+.logo {
+    font-size: 2em;
+    color: #fff;
+    user-select: none;
+}
+
+.carrito{
+    background-color: white;
+    height: 50vh;
+ 
+} 
+
+

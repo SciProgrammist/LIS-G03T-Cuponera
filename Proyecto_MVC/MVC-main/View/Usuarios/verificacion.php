@@ -50,7 +50,7 @@
 
                 <center>
                 <input type="submit" class="btn btn-primary" value="Guardar" name="Guardar">
-                <a class="btn btn-danger" href="<?= PATH ?>/Usuarios/login">Cancelar</a>
+                <a class="btn btn-danger" href="<?= PATH ?>/Cupones/index">Cancelar</a>
                 </center>
 
                 </form>

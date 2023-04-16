@@ -59,7 +59,7 @@
                 <a href="<?= PATH ?>/Usuarios/register" class="list-group-item list-group-item-action list-group-item-danger">No dispones de una Cuenta ? Registrate con nosotros.</a>
             </div>
             <input type="submit" class="btn btn-primary" value="Iniciar Sesion" name="Guardar">
-            <a class="btn btn-danger" href="">Cancelar</a>
+            <a class="btn btn-danger" href="<?= PATH ?>/Cupones/index">Cancelar</a>
 
             </form>
         </div>

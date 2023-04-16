@@ -3,7 +3,7 @@ require_once 'Model.php';
 class UsuariosModel extends Model{
 
     public function validateUser($correo,$pass){ 
-        $query="SELECT ID_Usuario, Nombres, Estado, id_tipo_usuario FROM usuarios
+        $query="SELECT ID_Usuario, Nombres, Correo, Estado, id_tipo_usuario FROM usuarios
         WHERE Correo=:Correo AND Pass=:Pass";
         return $this->getQuery($query,['Correo'=>$correo, 'Pass'=>$pass]);
     }
