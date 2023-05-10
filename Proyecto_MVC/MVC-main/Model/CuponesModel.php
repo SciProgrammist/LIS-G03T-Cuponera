@@ -25,4 +25,17 @@ class CuponesModel extends Model{
 
     }
 
+    public function updateOferta($oferta=array()){
+        $query="UPDATE ofertas SET Titulo_Oferta=:Titulo_Oferta, Precio_Regular=:Precio_Regular, Precio_Oferta=:Precio_Oferta , Fecha_Inicio_Oferta=:Fecha_Inicio_Oferta, Fecha_Fin_Oferta=:Fecha_Fin_Oferta, Cantidad_Cupones=:Cantidad_Cupones, Descripcion=:Descripcion, Estado_Oferta=:Estado_Oferta, Justificacion=:Justificacion, id_empresa=:id_empresa WHERE ID_Oferta=:ID_Oferta";
+        return $this->setQuery($query,$oferta);
+
+    }
+
+    public function updateOferta_2($oferta=array()){
+        $query="UPDATE ofertas SET Titulo_Oferta=:Titulo_Oferta, Precio_Regular=:Precio_Regular, Precio_Oferta=:Precio_Oferta , Fecha_Inicio_Oferta=:Fecha_Inicio_Oferta, Fecha_Fin_Oferta=:Fecha_Fin_Oferta, Cantidad_Cupones=:Cantidad_Cupones, Descripcion=:Descripcion, Estado_Oferta=:Estado_Oferta, Justificacion=:Justificacion, Imagen=:Imagen, id_empresa=:id_empresa WHERE ID_Oferta=:ID_Oferta";
+        return $this->setQuery($query,$oferta);
+
+    }
+
+
 }

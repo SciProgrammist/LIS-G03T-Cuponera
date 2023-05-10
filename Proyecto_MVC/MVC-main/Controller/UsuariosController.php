@@ -123,7 +123,7 @@ class UsuariosController extends Controller{
                     $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
                 
                     //Recipients
-                    $mail->setFrom('tekmo120@gmail.com', 'LIS');
+                    $mail->setFrom('', 'LIS');
                     $mail->addAddress("$Correo");     //Add a recipient
                     //$mail->addAddress('ellen@example.com');               //Name is optional
                     //$mail->addReplyTo('info@example.com', 'Information');
@@ -226,7 +226,8 @@ class UsuariosController extends Controller{
                 $_SESSION['login_data']=$login_data; //Variable de session que captura los datos del usuario.
                 header('location:'.PATH.'/Cupones/index');
             }elseif($login_data['id_tipo_usuario'] == 1 && $login_data['Estado'] == "Activo" ){
-                echo "<script>alert('Usuario Ingreso con exito');</script>";
+                $_SESSION['login_data']=$login_data; //Variable de session que captura los datos del usuario.
+                header('location:'.PATH.'/Cupones/Admin');
             }elseif($login_data['id_tipo_usuario'] == 2 && $login_data['Estado'] == "Activo" ){
                 echo "<script>alert('Usuario Ingreso con exito');</script>";
             }else{

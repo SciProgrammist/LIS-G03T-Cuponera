@@ -14,10 +14,10 @@ class EmpresaModel extends Model{
         }      
     }
 
-    /*public function updateUsuario($usuario=array()){
-        $query="UPDATE usuarios SET Nombres=:Nombres, Apellidos=:Apellidos, Telefono=:Telefono, Correo=:Correo, Pass=:Pass, Estado=:Estado, id_tipo_usuario=:id_tipo_usuario  WHERE ID_Usuario=:ID_Usuario";
-        return $this->setQuery($query,$usuario);
+    public function updateEmpresa($empresa=array()){
+        $query="UPDATE empresa SET Nombre_Empresa=:Nombre_Empresa, Direccion=:Direccion, Nombre_Contacto=:Nombre_Contacto, Telefono=:Telefono, Correo=:Correo, Rubro=:Rubro, Porcentaje_Comision=:Porcentaje_Comision  WHERE ID_Empresa=:ID_Empresa";
+        return $this->setQuery($query,$empresa);
 
-    }*/
+    }
 
 }

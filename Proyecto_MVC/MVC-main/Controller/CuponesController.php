@@ -27,20 +27,26 @@ class CuponesController extends Controller{
          echo json_encode($this->model->get($id)[0]); //crea un json por medio de un arreglo
     }
 
-    /*public function Admin(){
-        $categoriaModel = new CategoriasModel();
+    public function Admin(){
+    
+        /*$categoriaModel = new CategoriasModel();
         $viewBag=array();
         $productos=$this->model->get();
         $viewBag['productos']=$productos;
         $viewBag['categorias']=$categoriaModel->get();
         //var_dump($viewBag);
-        if($_SESSION['login_data']['id_tipo_usuario'] == 1){
-            $this->render("VistaAdmin.php",$viewBag);
-        }elseif($_SESSION['login_data']['id_tipo_usuario'] == 2){
+        if($_SESSION['login_data']['id_tipo_usuario'] == 1){*/
+        $empresa = new EmpresaModel();
+        $viewBag = array();
+        $ofertas = $this->model->get();
+        $viewBag['empresas']=$empresa->get();
+        $viewBag['ofertas']=$ofertas;
+        $this->render("VistaAdmin.php",$viewBag);
+        /*}elseif($_SESSION['login_data']['id_tipo_usuario'] == 2){
             $this->render("VistaEmpleado.php",$viewBag);
-        }
+        }*/
         
-    }*/
+    }
 
     /*public function Empleado(){
         $categoriaModel = new CategoriasModel();
@@ -218,14 +224,14 @@ class CuponesController extends Controller{
 
             
         }
-    }
+    }*/
 
     public function edit($id){
         $viewBag=array();
-        $producto=$this->model->get($id);
-        $categoriaModel = new CategoriasModel();
-        $viewBag['categorias']=$categoriaModel->get();
-        $viewBag['producto']=$producto[0];
+        $oferta=$this->model->get($id);
+        $empresa = new EmpresaModel();
+        $viewBag['empresas']=$empresa->get();
+        $viewBag['oferta']=$oferta[0];
         $this->render("edit.php",$viewBag);
     }
 
@@ -236,55 +242,66 @@ class CuponesController extends Controller{
             
             extract($_POST);
             $errores=array();
-            $producto=array();
+            $oferta=array();
             $viewBag=array();
-            $producto['ID_Producto']=$ID_Producto;
-            $producto['Nombre']=$Nombre;
-            $producto['Descripcion']=$Descripcion;
-            //$producto['Img']=$Img;
-            $producto['id_categoria']=$Categoria;
-            $producto['Precio']=$Precio;
-            $producto['Existencias']=$Existencias;
 
-            if(estaVacio($ID_Producto)||!isset($ID_Producto)){
-                array_push($errores,'Debes ingresar el codigo del Producto');
-            }
-            elseif(!esCodigoProducto($ID_Producto)){
-                array_push($errores,'El codigo del producto debe tener el formato PROD#####');
+            $oferta['ID_Oferta']=$ID_Oferta;
+            $oferta['Titulo_Oferta']=$Titulo_Oferta;
+            $oferta['Precio_Regular']=$Precio_Regular;
+            $oferta['Precio_Oferta']=$Precio_Oferta;
+            $oferta['Fecha_Inicio_Oferta']=$Fecha_Inicio_Oferta;
+            $oferta['Fecha_Fin_Oferta']=$Fecha_Fin_Oferta;
+            $oferta['Cantidad_Cupones']=$Cantidad_Cupones;
+            $oferta['Descripcion']=$Descripcion;
+            $oferta['Estado_Oferta']=$Estado_Oferta;
+            $oferta['Justificacion']=$Justificacion;
+            //$oferta['Imagen']=$Imagen;
+            $oferta['id_empresa']=$id_empresa;
+
+            //var_dump($id_empresa);
+
+
+            if(estaVacio($ID_Oferta)||!isset($ID_Oferta)){
+                array_push($errores,'Debes ingresar el codigo de la Oferta');
             }
 
-            if(estaVacio($Nombre)||!isset($Nombre)){
-                array_push($errores,'Debes ingresar el nombre del Producto');
+            if(estaVacio($Titulo_Oferta)||!isset($Titulo_Oferta)){
+                array_push($errores,'Debes ingresar un Titulo a la Oferta');
             }
             
-            if(estaVacio($Categoria)||!isset($Categoria)){
-                array_push($errores,'Debes ingresar la Categoria'); 
+            if(estaVacio($Precio_Regular)||!isset($Precio_Regular)){
+                array_push($errores,'Debes ingresar el Precio Regular'); 
+            }
+
+            if(estaVacio($Precio_Oferta)||!isset($Precio_Oferta)){
+                array_push($errores,'Debes ingresar el Precio de Oferta'); 
             }
             
+            if(estaVacio($Fecha_Inicio_Oferta)||!isset($Fecha_Inicio_Oferta)){
+                array_push($errores,'Debes ingresar Una Fecha de Inicio');
+            }
+
+            if(estaVacio($Fecha_Fin_Oferta)||!isset($Fecha_Fin_Oferta)){
+                array_push($errores,'Debes ingresar Una Fecha Final');
+            }
+
             if(estaVacio($Descripcion)||!isset($Descripcion)){
-                array_push($errores,'Debes ingresar Una Descripcion');
-            }
-
-            if(estaVacio($Precio)||!isset($Precio)){
-                array_push($errores,'Debes ingresar el Precio');
-            }
-
-            if(estaVacio($Existencias)||!isset($Existencias)){
-                array_push($errores,'Debes ingresar el numero de existencias');
+                array_push($errores,'Debes ingresar una Descripcion');
             }
 
             if(isset($archivo) && $archivo != ""){
 
                 $tipo = $_FILES['Img']['type'];
+                var_dump($tipo);
                 $tamano = $_FILES['Img']['size'];
                 $temp = $_FILES['Img']['tmp_name'];
 
-                if (!((strpos($tipo, "jpg") || strpos($tipo, "png")))) {
+                if (!((strpos($tipo, "jpg") || strpos($tipo, "png") || strpos($tipo, "jpeg")))) {
                     array_push($errores,'Error. La extensión o el tamaño de los archivos no es correcta.');
                 }else{
                     if (move_uploaded_file($temp, './View/img/'.$archivo)) {
                         chmod('./View/img/'.$archivo.'', 0777);
-                        $producto['Img']=$archivo;
+                        $oferta['Imagen']=$archivo;
     
                     }else{
                         array_push($errores,'Ocurrió algún error al subir el fichero. No pudo guardarse.');
@@ -294,20 +311,20 @@ class CuponesController extends Controller{
             
 
             if(count($errores)==0){
-                if(!isset($producto['Img']) || $$producto['Img'] ==""){
-                    $this->model->updateProductos2($producto);
-                    header('location:'.PATH.'/Productos/Admin');
+                if(!isset($oferta['Imagen']) || $oferta['Imagen'] ==""){
+                     $this->model->updateOferta($oferta);
+                     header('location:'.PATH.'/Cupones/Admin');
                 }else{
-                    $this->model->updateProductos($producto);
-                    header('location:'.PATH.'/Productos/Admin');
+                     $this->model->updateOferta_2($oferta);
+                     header('location:'.PATH.'/Cupones/Admin');
                 }
                 
             }
             else{
-                $categoriaModel = new CategoriasModel();
+                $empresa = new EmpresaModel();
                 $viewBag['errores']=$errores;
-                $viewBag['producto']=$producto;
-                $viewBag['categorias']=$categoriaModel->get();
+                $viewBag['oferta']=$oferta;
+                $viewBag['empresas']=$empresa->get();
                 $this->render("edit.php",$viewBag);
             }
 
@@ -316,7 +333,7 @@ class CuponesController extends Controller{
         }
     }
 
-    public function remove($id){
+   /* public function remove($id){
         $this->model->removeProductos($id);
         //var_dump($id);
         header('location:'.PATH.'/Productos/Admin');

@@ -11,7 +11,7 @@
             <div class="container p-5">
                 <header class="d-flex justify-content-around">
                     <div class="d-flex align-items-center text-dark text-decoration-none">
-                        <img src="" alt="logo.png">
+                        <img src="../View/img/Logo.png" alt="logo.png" width="50" height="50" class="me-2" viewBox="0 0 118 94">
                         <spam clas="fs-4">Cuponera [Nombre]</spam>
                     </div>
                 </header>

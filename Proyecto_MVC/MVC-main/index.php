@@ -3,6 +3,7 @@ include_once 'Core/config.php';
 include_once 'Controller/UsuariosController.php';
 include_once 'Controller/CuponesController.php';
 include_once 'Controller/OrdenesController.php';
+include_once 'Controller/EmpresasController.php';
 $url=$_SERVER['REQUEST_URI'];
 session_start();//Iniciando sesion
 $url=explode("/",$url);
