@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 
 --
 -- Base de datos: `cuponera`
+CREATE DATABASE cuponera;
+use cuponera;
 --
 
 -- --------------------------------------------------------
