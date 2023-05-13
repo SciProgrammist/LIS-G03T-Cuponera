@@ -119,10 +119,7 @@
             <p>Bienvenido <?=$_SESSION['login_data']['Nombres']?>, se encuentra en la interfaz administrativa.</p>
           </center>
           <div class="d-flex justify-content-around">
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Empresas/index"><i class="fa-solid fa-building fa-lg"></i></i> Gestion de Empresas</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Rubros/index"><i class="fa-solid fa-pen-to-square fa-lg"></i>  Gestion de Rubros</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Usuarios/index"><i class="fa-solid fa-user-pen fa-lg"></i>  Detalle de Clientes</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Cupones/detalles"><i class="fa-solid fa-chart-column fa-lg"></i>  Detalle de Ofertas</a>
+            <a type="button" class="btn btn-light" href="<?=PATH?>/Cupones/Admin"><i class="fa-solid fa-rotate-left fa-lg"></i>  Regresar</a>
           </div>
         </div>
       </div>
@@ -142,35 +139,28 @@
        <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-responsive table-condensed" id="tabla" style="margin-top:20px;">
                 <thead>
-                    <th>Img</th>
-                    <th>Codigo</th>
-                    <th>Titulo</th>
-                    <th>Precio Oferta</th>
-                    <th>Fecha Final</th>
-                    <th>Cantidad de Cupones</th>
-                    <th>Estado</th>
-                    <th>Codigo de Empresa</th>
-                    <th>Acciones</th>
+                    <th>Oferta</th>
+                    <th>Empresa</th>
+                    <th>Cupones Vendidos</th>
+                    <th>Cupones Disponibles</th>
+                    <th>Ingresos</th>
+                    <th>Cargo por Servicio</th>
                 </thead>
                 <tbody>
-                    <?php                   
-                    foreach($ofertas as $oferta){                      
+                    
+                    <?php
+                    //var_dump($ofertas);           
+                    foreach($ofertas as $oferta){             
                     ?>
                     <tr>
-                        <td><img src="../View/img/<?=$oferta['Imagen']?>" class="card-img-top" style="width: 10rem; height: 10rem;" alt="Producto"></td>
-                        <td><?=$oferta['ID_Oferta']?></td>
                         <td><?=$oferta['Titulo_Oferta']?></td>
-                        <td><?=$oferta['Precio_Oferta']?></td>
-                        <td><?=$oferta['Fecha_Fin_Oferta']?></td>
-                        <td><?=$oferta['Cantidad_Cupones']!=0? $oferta['Cantidad_Cupones'] : 'Ilimitados'?></td>
-                        <td><?=$oferta['Estado_Oferta']?></td>
-                        <td><?=$oferta['id_empresa']?></td>
-                        <td>
-                          <a type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#modal" href="javascript:void(0)" onclick="detalles('<?=$oferta['ID_Oferta']?>')"><i class="fa-regular fa-eye"></i> Ver</a>
-                          <a type="button" class="btn btn-primary m-2" href="<?= PATH.'/Cupones/edit/'.$oferta['ID_Oferta']?>"><i class="fa-solid fa-pen-to-square"></i> Editar</a>                   
-                        </td>
+                        <td><?=$oferta['Nombre_Empresa']?></td>
+                        <td><?=$oferta['Cantidad']?></td>
+                        <td><?=$oferta['Cantidad_Cupones']==0 ? 'Ilimitados' : $oferta['Cantidad_Cupones'] ?></td>
+                        <td>$ <?=$oferta['Ingresos']?></td>
+                        <td>$ <?=$oferta['Cargo']?></td>
                     </tr>
-                    <?php          
+                    <?php         
                     }
                     ?>
                 </tbody>
@@ -198,35 +188,7 @@
         $('#tabla').DataTable();
     });
     
-    function detalles(id){
-        $.ajax({
-            url:"<?=PATH?>/Cupones/details/"+id,
-            type:"GET",
-            dataType:"JSON",
-            success: function(datos){
-                $('#nombre').text(datos.Titulo_Oferta);
-                $('#precio_regular').text(datos.Precio_Regular);
-                $('#precio_oferta').text(datos.Precio_Oferta);
-                <?php
-                foreach($empresas as $empresa){
-                ?>
-                if(datos.id_empresa == '<?=$empresa['ID_Empresa']?>'){
-                  datos.id_empresa = '<?=$empresa['Nombre_Empresa']?>';               
-                }
-                <?php      
-                }
-                ?>
-                $('#empresa').text(datos.id_empresa);
-                if(datos.Cantidad_Cupones == null){
-                  datos.Cantidad_Cupones = "Hasta terminar Fecha limite"
-                }
-                $('#existencias').text(datos.Cantidad_Cupones);
-                $('#descripcion').text(datos.Descripcion);
-                $('#modal').modal('show');
-                $('.titulo-modal').text(datos.Titulo_Oferta);
-            }
-        })
-    }
+
 </script>
 
   </body>

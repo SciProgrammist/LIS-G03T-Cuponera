@@ -77,7 +77,7 @@
 
       
       <a href="#" class="d-flex align-items-center text-dark text-decoration-none">
-        <img src="../View/img/Logo.png" alt="logo" width="50" height="50" class="me-2" viewBox="0 0 118 94">
+        <img src="/Proyecto_MVC/MVC-main/View/img/Logo.png" alt="logo" width="50" height="50" class="me-2" viewBox="0 0 118 94">
         <span class="fs-4">Cuponera</span>
       </a>
 
@@ -115,14 +115,11 @@
       <div class="col-md-12">
         <div class="h-100 p-5 text-bg-dark rounded-3 ">
           <center>
-            <h1>Administracion</h1>
-            <p>Bienvenido <?=$_SESSION['login_data']['Nombres']?>, se encuentra en la interfaz administrativa.</p>
+            <h1>Canjeo de Cupon</h1>
+            <p>Bienvenido <?=$_SESSION['login_data']['Nombres']?>.</p>
+            <a type="button" class="btn btn-light" href="<?=PATH?>/Empresas/Empleado"><i class="fa-solid fa-rotate-left fa-lg"></i>  Regresar</a>
           </center>
           <div class="d-flex justify-content-around">
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Empresas/index"><i class="fa-solid fa-building fa-lg"></i></i> Gestion de Empresas</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Rubros/index"><i class="fa-solid fa-pen-to-square fa-lg"></i>  Gestion de Rubros</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Usuarios/index"><i class="fa-solid fa-user-pen fa-lg"></i>  Detalle de Clientes</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Cupones/detalles"><i class="fa-solid fa-chart-column fa-lg"></i>  Detalle de Ofertas</a>
           </div>
         </div>
       </div>
@@ -137,40 +134,54 @@
 
     </div>
 
-    <div class="row align-items-md-stretchS py-4">
+    <?php
+    //var_dump($_SESSION['login_data']);
+        if(isset($errores)){
+            if(count($errores)>0){
+                echo "<div class='my-5 p-5 mb-4 bg-danger rounded-3'><ul>";
+                foreach ($errores as $error) {
+                    echo "<li>$error</li>";
+                }
+                echo "</ul></div>";
 
-       <div class="table-responsive">
+            }
+        }
+    ?>
+
+    <div class="row align-items-md-stretchS py-4">
+    <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-responsive table-condensed" id="tabla" style="margin-top:20px;">
                 <thead>
-                    <th>Img</th>
-                    <th>Codigo</th>
+                    <th>Cupon</th>
                     <th>Titulo</th>
-                    <th>Precio Oferta</th>
-                    <th>Fecha Final</th>
-                    <th>Cantidad de Cupones</th>
-                    <th>Estado</th>
-                    <th>Codigo de Empresa</th>
-                    <th>Acciones</th>
+                    <th>Descripcion</th>
+                    <th>Empresa</th>
+                    <th>Cliente</th>
+                    <th>DUI</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Accion</th>
                 </thead>
                 <tbody>
-                    <?php                   
-                    foreach($ofertas as $oferta){                      
+                    
+                    <?php
+                    //var_dump($cupones);           
+                    foreach($cupones as $cupon){             
                     ?>
                     <tr>
-                        <td><img src="../View/img/<?=$oferta['Imagen']?>" class="card-img-top" style="width: 10rem; height: 10rem;" alt="Producto"></td>
-                        <td><?=$oferta['ID_Oferta']?></td>
-                        <td><?=$oferta['Titulo_Oferta']?></td>
-                        <td><?=$oferta['Precio_Oferta']?></td>
-                        <td><?=$oferta['Fecha_Fin_Oferta']?></td>
-                        <td><?=$oferta['Cantidad_Cupones']!=0? $oferta['Cantidad_Cupones'] : 'Ilimitados'?></td>
-                        <td><?=$oferta['Estado_Oferta']?></td>
-                        <td><?=$oferta['id_empresa']?></td>
+                        <td><?=$cupon['ID_Cupon']?></td>
+                        <td><?=$cupon['Titulo_Oferta']?></td>
+                        <td><?=$cupon['Descripcion']?></td>
+                        <td><?=$cupon['Nombre_Empresa']?></td>
+                        <td><?=$cupon['Nombres']?></td>
+                        <td><?=$cupon['DUI']?></td>
+                        <td><?=$cupon['Cantidad']?></td>
+                        <td>$ <?=$cupon['Total']?></td>
                         <td>
-                          <a type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#modal" href="javascript:void(0)" onclick="detalles('<?=$oferta['ID_Oferta']?>')"><i class="fa-regular fa-eye"></i> Ver</a>
-                          <a type="button" class="btn btn-primary m-2" href="<?= PATH.'/Cupones/edit/'.$oferta['ID_Oferta']?>"><i class="fa-solid fa-pen-to-square"></i> Editar</a>                   
-                        </td>
+                        <a type="button" class="btn btn-primary m-2" href="<?= PATH.'/Empresas/canjear/'.$cupon['ID_Cupon']?>"><i class="fa-solid fa-check fa-lg"></i> Canjear</a>
+                        </td>               
                     </tr>
-                    <?php          
+                    <?php         
                     }
                     ?>
                 </tbody>
@@ -197,36 +208,6 @@
     $(document).ready(function () {
         $('#tabla').DataTable();
     });
-    
-    function detalles(id){
-        $.ajax({
-            url:"<?=PATH?>/Cupones/details/"+id,
-            type:"GET",
-            dataType:"JSON",
-            success: function(datos){
-                $('#nombre').text(datos.Titulo_Oferta);
-                $('#precio_regular').text(datos.Precio_Regular);
-                $('#precio_oferta').text(datos.Precio_Oferta);
-                <?php
-                foreach($empresas as $empresa){
-                ?>
-                if(datos.id_empresa == '<?=$empresa['ID_Empresa']?>'){
-                  datos.id_empresa = '<?=$empresa['Nombre_Empresa']?>';               
-                }
-                <?php      
-                }
-                ?>
-                $('#empresa').text(datos.id_empresa);
-                if(datos.Cantidad_Cupones == null){
-                  datos.Cantidad_Cupones = "Hasta terminar Fecha limite"
-                }
-                $('#existencias').text(datos.Cantidad_Cupones);
-                $('#descripcion').text(datos.Descripcion);
-                $('#modal').modal('show');
-                $('.titulo-modal').text(datos.Titulo_Oferta);
-            }
-        })
-    }
 </script>
 
   </body>

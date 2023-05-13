@@ -115,7 +115,7 @@
 
       <div class="col-md-12">
         <div class="h-100 p-5 text-bg-dark rounded-3 ">
-          <center><h1>Editar Empresa</h1> <i class="fa-solid fa-building fa-2xl"></i></i></center>
+          <center><h1>Nueva Empresa</h1> <i class="fa-solid fa-building fa-2xl"></i></i></center>
         </div>
       </div>
     
@@ -147,7 +147,7 @@
 
     <div class="row align-items-md-stretchS py-4">
         
-        <form role="form "action="<?= PATH ?>/Empresas/update" method="POST">
+        <form role="form "action="<?= PATH ?>/Empresas/add" method="POST">
 
             <div class="row my-2">
 
@@ -155,7 +155,7 @@
                 <label for="codigo">Codigo de la Empresa:</label>
                 <div class="input-group my-2">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" readonly="true" name="ID_Empresa" id="ID_Empresa" placeholder="Ingresa el Codigo la Empresa" value="<?= isset($empresa)?$empresa['ID_Empresa']:'' ?>" >
+                    <input type="text" class="form-control" name="ID_Empresa" id="ID_Empresa" placeholder="Ingresa el Codigo la Empresa" value="<?= isset($empresa)?$empresa['ID_Empresa']:'' ?>" >
                 </div>
             </div>
 
@@ -208,7 +208,7 @@
                         <?php
                         foreach($rubros as $rubro){
                             ?>
-                        <option value="<?=$rubro['ID_Rubro']?>" <?=$empresa['Rubro']==$rubro['ID_Rubro']?'Selected' : ''?>><?=$rubro['Nombre_Rubro']?></option>
+                        <option value="<?=$rubro['ID_Rubro']?>"><?=$rubro['Nombre_Rubro']?></option>
                         <?php } ?>                                     
                     </select>
 

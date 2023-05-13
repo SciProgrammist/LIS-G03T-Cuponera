@@ -119,7 +119,7 @@
             <p>Bienvenido <?=$_SESSION['login_data']['Nombres']?>, se encuentra en la interfaz administrativa.</p>
           </center>
           <div class="d-flex justify-content-around">
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Categorias/create"><i class="fa-solid fa-plus fa-lg"></i>  Agregar Empresa</a>
+            <a type="button" class="btn btn-light" href="<?=PATH?>/Empresas/create"><i class="fa-solid fa-plus fa-lg"></i>  Agregar Empresa</a>
             <a type="button" class="btn btn-light" href="<?=PATH?>/Cupones/Admin"><i class="fa-solid fa-rotate-left fa-lg"></i>  Regresar</a>
           </div>
         </div>
@@ -168,7 +168,7 @@
                         <td><?=$empresa['Telefono']?></td>
                         <td><?=$empresa['Correo']?></td>
                         <td><?=$empresa['Rubro']?></td>
-                        <td><?=$empresa['Porcentaje_Comision']*100?></td>
+                        <td><?=$empresa['Porcentaje_Comision']?></td>
                         <td>
                           <a type="button" class="btn btn-primary m-2" href="<?= PATH.'/Empresas/edit/'.$empresa['ID_Empresa']?>"><i class="fa-solid fa-pen-to-square"></i> Editar</a>                   
                         </td>

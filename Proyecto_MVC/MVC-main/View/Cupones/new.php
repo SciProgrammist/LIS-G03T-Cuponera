@@ -84,11 +84,11 @@
      
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa-regular fa-user"></i> <?=isset($_SESSION['login_data']['Nombres'])? $_SESSION['login_data']['Nombres']:' Cuenta' ?>
+        <i class="fa-regular fa-user"></i> <?=isset($_SESSION['login_data']['Nombre_Contacto'])? $_SESSION['login_data']['Nombre_Contacto']:' Cuenta' ?>
         </button>
         <ul class="dropdown-menu dropdown-menu-dark">
         <?php
-            if(!isset($_SESSION['login_data']['Nombres'])){            
+            if(!isset($_SESSION['login_data']['Nombre_Contacto'])){            
             ?>
           <li><a class="dropdown-item" href="<?= PATH ?>/Usuarios/login">Iniciar Session</a></li>
           <?php
@@ -115,7 +115,7 @@
 
       <div class="col-md-12">
         <div class="h-100 p-5 text-bg-dark rounded-3 ">
-          <center><h1>Editar Empresa</h1> <i class="fa-solid fa-building fa-2xl"></i></i></center>
+          <center><h1>Nueva Oferta</h1> <i class="fa-solid fa-boxes-stacked fa-2xl"></i></center>
         </div>
       </div>
     
@@ -147,87 +147,89 @@
 
     <div class="row align-items-md-stretchS py-4">
         
-        <form role="form "action="<?= PATH ?>/Empresas/update" method="POST">
+        <form role="form "action="<?= PATH ?>/Cupones/add" method="POST" enctype="multipart/form-data">
 
             <div class="row my-2">
 
             <div class="form-group col-md-4 m-3">
-                <label for="codigo">Codigo de la Empresa:</label>
+                <label for="nombre">Titulo de la Oferta</label>
                 <div class="input-group my-2">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" readonly="true" name="ID_Empresa" id="ID_Empresa" placeholder="Ingresa el Codigo la Empresa" value="<?= isset($empresa)?$empresa['ID_Empresa']:'' ?>" >
+                    <input type="text" class="form-control" name="Titulo_Oferta" id="Titulo_Oferta" placeholder="Ingresa el Titulo de la Oferta" value="<?= isset($oferta)?$oferta['Titulo_Oferta']:'' ?>" >
                 </div>
             </div>
 
             <div class="form-group col-md-4 m-3">
-                <label for="Nombre_Empresa">Nombre de la Empresa:</label>
+                <label for="Precio_Regular">Precio Regular</label>
                 <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" name="Nombre_Empresa" id="Nombre_Empresa" placeholder="Ingresa el Nomnre de la Empresa" value="<?= isset($empresa)?$empresa['Nombre_Empresa']:'' ?>" >
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-dollar-sign"></i></span>
+                    <input type="number" class="form-control" name="Precio_Regular" id="Precio_Regular" step="0.01" min="0" placeholder="Ingresa el Precio Regular de la Oferta" value="<?= isset($oferta)?$oferta['Precio_Regular']:'' ?>" >
                 </div>
             </div>
 
             <div class="form-group col-md-4 m-3">
-                <label for="Direccion">Direccion:</label>
+                <label for="Precio_Oferta">Precio en Oferta</label>
                 <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" name="Direccion" id="Direccion" placeholder="Ingresa una Direccion" value="<?= isset($empresa)?$empresa['Direccion']:'' ?>" >
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-sharp fa-solid fa-dollar-sign"></i></span>
+                    <input type="number" class="form-control" name="Precio_Oferta" id="Precio_Oferta" step="0.01" min="0" placeholder="Ingresa el Precio en en Oferta" value="<?= isset($oferta)?$oferta['Precio_Oferta']:'' ?>" >
                 </div>
             </div>
 
             <div class="form-group col-md-4 m-3">
-                <label for="Nombre_Contacto">Contacto:</label>
+                <label for="Fecha_Inicio_Oferta">Fecha de Inicio de Oferta</label>
                 <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" name="Nombre_Contacto" id="Nombre_Contacto" placeholder="Ingresa una nombre para su Contacto" value="<?= isset($empresa)?$empresa['Nombre_Contacto']:'' ?>" >
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days fa-lg"></i></span>
+                    <input type="date" class="form-control" name="Fecha_Inicio_Oferta" id="Fecha_Inicio_Oferta" value="<?= isset($oferta)?$oferta['Fecha_Inicio_Oferta']:'' ?>" >
                 </div>
             </div>
 
             <div class="form-group col-md-4 m-3">
-                <label for="Telefono">Telefono:</label>
+                <label for="Fecha_Fin_Oferta">Fecha de Fin de Oferta</label>
                 <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-phone"></i></span>
-                    <input type="text" class="form-control" name="Telefono" id="Telefono" placeholder="Ingresar un numero Telefonico" value="<?= isset($empresa)?$empresa['Telefono']:'' ?>" >
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-calendar-days fa-lg"></i></span>
+                    <input type="date" class="form-control" name="Fecha_Fin_Oferta" id="Fecha_Fin_Oferta" value="<?= isset($oferta)?$oferta['Fecha_Fin_Oferta']:'' ?>" >
                 </div>
             </div>
 
             <div class="form-group col-md-4 m-3">
-                <label for="Correo">Correo:</label>
+                <label for="Cantidad_Cupones">Cantidad de Cupones</label>
                 <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
-                    <input type="email" class="form-control" name="Correo" id="Correo" placeholder="correo electronico: name@example.com" value="<?= isset($empresa)?$empresa['Correo']:'' ?>" >
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-arrow-up-1-9 fa-lg"></i></span>
+                    <input type="text" class="form-control" name="Cantidad_Cupones" id="Cantidad_Cupones" value="<?= isset($oferta)?$oferta['Cantidad_Cupones']:'' ?>" >
                 </div>
             </div>
-        
+
+
             <div class="form-group col-md-4 m-3">
-                <label for="Rubro">Rubro:</label>
+                <label for="Descripcion">Descripcion</label>
+                <div class="input-group my-2">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-regular fa-comment fa-lg"></i></span>
+                    <textarea class="form-control" placeholder="Descripcion de la Oferta" id="Descripcion" name="Descripcion" ><?= isset($oferta)?$oferta['Descripcion']:'' ?></textarea>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4 m-3">
+                <label for="categoria">Empresa</label>
                 <div class="input-group my-2">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-building fa-lg"></i></span>
 
-                    <select id="Rubro" name="Rubro" class="form-select" >
-                        <?php
-                        foreach($rubros as $rubro){
-                            ?>
-                        <option value="<?=$rubro['ID_Rubro']?>" <?=$empresa['Rubro']==$rubro['ID_Rubro']?'Selected' : ''?>><?=$rubro['Nombre_Rubro']?></option>
-                        <?php } ?>                                     
-                    </select>
-
+                    <input type="text" class="form-control" readonly="true" name="id_empresa" id="id_empresa" value="<?= isset($empresa)?$empresa['ID_Empresa']:'' ?>" >
+                    <input type="text" class="form-control" readonly="true" name="" id="" value="<?= isset($empresa)?$empresa['Nombre_Empresa']:'' ?>" >
                 </div>
             </div>
 
-            <div class="form-group col-md-4 m-3">
-                <label for="Porcentaje_Comision">Porcentaje de Comision:</label>
+            <div class="form-group col-md-6 m-3">
+                <label for="img">Imagen</label>
                 <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-percent"></i></span>
-                    <input type="number" class="form-control" name="Porcentaje_Comision" id="Porcentaje_Comision" step="0.01" min="0" placeholder="Ingresa el Precio Regular de la Oferta" value="<?= isset($empresa)?$empresa['Porcentaje_Comision']:'' ?>" >
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-image"></i></span>
+                    <input class="form-control" name="Img" id="Img" type="file">
                 </div>
             </div>
-
 
             </div>
 
             <input type="submit" class="btn btn-primary" value="Guardar" name="Guardar">
-            <a class="btn btn-danger" href="<?= PATH ?>/Empresas/index">Cancelar</a>
+            <a class="btn btn-danger" href="<?= PATH ?>/Empresas/Admin">Cancelar</a>
             
         </form>
     </div>

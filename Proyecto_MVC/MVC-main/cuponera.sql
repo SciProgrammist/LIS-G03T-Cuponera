@@ -66,6 +66,17 @@ CREATE TABLE IF NOT EXISTS `Empresa` (
 INSERT INTO `Empresa` (`ID_Empresa`, `Nombre_Empresa`, `Direccion`, `Nombre_Contacto`, `Telefono`, `Correo`, `Pass`, `Rubro`,`Porcentaje_Comision`, `id_tipo_usuario`) VALUES
 ('EMP001','Coca Cola', 'San salvador', 'Luis', '71255695', 'JoseLuis@hotmail.com', '12345', 'Restaurante', 0.08, 2);
 
+--Tabla Rubros
+CREATE TABLE IF NOT EXISTS `Rubros`(
+    `ID_Rubro` int(11) NOT NULL AUTO_INCREMENT,
+    `Nombre_Rubro` varchar(30) NOT NULL,
+    PRIMARY KEY(`ID_Rubro`) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Rubros` (`ID_Rubro`,`Nombre_Rubro`) VALUES
+(1, 'Produccion'),
+(2, 'Restaurante');
+
 -- Tabla Empleados
 
 CREATE TABLE IF NOT EXISTS `Empleados` (
@@ -149,7 +160,8 @@ ALTER TABLE `Empleados`
  ADD CONSTRAINT `FK_EMPRESA` FOREIGN KEY (`id_empresa`) REFERENCES `Empresa` (`ID_Empresa`); 
 
 ALTER TABLE `Empresa`
- ADD CONSTRAINT `FK_ADMIN_EMPRESA` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `Tipo_Usuarios` (`ID_Tipo_Usuario`); 
+ ADD CONSTRAINT `FK_ADMIN_EMPRESA` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `Tipo_Usuarios` (`ID_Tipo_Usuario`),
+ ADD CONSTRAINT `FK_RUBRO_EMPRESA` FOREIGN KEY (`Rubro`) REFERENCES `Rubros` (`ID_Rubro`);
 
 ALTER TABLE `Ofertas`
   ADD CONSTRAINT `FK_EMPRESA_OFERTA` FOREIGN KEY (`id_empresa`) REFERENCES `Empresa` (`ID_Empresa`); 

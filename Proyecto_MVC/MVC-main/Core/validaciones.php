@@ -23,5 +23,8 @@ function esDui($var){
     return preg_match('/^\d{8}-\d$/',$var);
 }
 
+function esCodigoEmpresa($var){
+    return preg_match('/^EMP[0-9]{3}$/',$var);
+}
 
 ?>

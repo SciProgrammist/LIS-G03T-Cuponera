@@ -1,7 +1,9 @@
 <?php
 require_once 'Controller.php';
 require_once './Model/UsuariosModel.php';
+require_once './Model/CuponesModel.php';
 require_once './Core/validaciones.php';
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -23,6 +25,23 @@ class UsuariosController extends Controller{
   
     public function register(){ //Presenta la vista de la pagina para registrar usuarios.
         $this->render("registro.php");
+    }
+
+    public function index(){
+        $clientes=$this->model->DatosClientes();
+        $viewBag=array();
+        $viewBag['clientes']=$clientes;
+        $this->render("index.php",$viewBag);
+    }
+
+    public function datos($id){
+        $Cupones = new CuponesModel();
+        $viewBag=array();
+        $cliente=$this->model->get($id);
+        $viewBag['cliente'] = $cliente[0];
+        $viewBag['cupones']=$Cupones->CuponesUsuario($id);
+        $this->render("DatosClientes.php",$viewBag);
+
     }
 
     public function registerUser(){ //Metodo para registrar los usuarios.
@@ -237,6 +256,17 @@ class UsuariosController extends Controller{
             }
             
             
+        }else if(!empty($model->validateUserEmpresa($correo,$pass))){
+            $login_data=$model->validateUserEmpresa($correo,$pass);
+            $login_data=$login_data[0];
+            $_SESSION['login_data']=$login_data;
+            header('location:'.PATH.'/Empresas/Admin');
+            
+        } else if(!empty($model->validateUserEmpleado($correo,$pass))){
+            $login_data=$model->validateUserEmpleado($correo,$pass);
+            $login_data=$login_data[0];
+            $_SESSION['login_data']=$login_data;
+            header('location:'.PATH.'/Empresas/Empleado');
         }
         else{
             array_push($errores,"Usuario no Registrado.");

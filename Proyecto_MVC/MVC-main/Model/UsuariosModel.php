@@ -8,6 +8,18 @@ class UsuariosModel extends Model{
         return $this->getQuery($query,['Correo'=>$correo, 'Pass'=>$pass]);
     }
 
+    public function validateUserEmpresa($correo,$pass){ 
+        $query="SELECT ID_Empresa, Nombre_Empresa, Nombre_Contacto, Correo, id_tipo_usuario FROM empresa
+        WHERE Correo=:Correo AND Pass=:Pass";
+        return $this->getQuery($query,['Correo'=>$correo, 'Pass'=>$pass]);
+    }
+
+    public function validateUserEmpleado($correo,$pass){
+        $query="SELECT Nombres, Correo, id_empresa, id_tipo_usuario FROM empleados
+        WHERE Correo=:Correo AND Pass=:Pass";
+         return $this->getQuery($query,['Correo'=>$correo, 'Pass'=>$pass]);
+    }
+
     public function CodigoUser($codigo){ 
         $query="SELECT ID_Usuario, Estado, Codigo FROM usuarios
         WHERE Codigo=:Codigo";
@@ -30,6 +42,11 @@ class UsuariosModel extends Model{
             $query="SELECT * FROM Usuarios WHERE ID_Usuario=:ID_Usuario";
             return $this->getQuery($query,['ID_Usuario'=>$id]);
         }      
+    }
+
+    public function DatosClientes(){
+        $query="SELECT * FROM Usuarios WHERE id_tipo_usuario= '4' ";
+        return $this->getQuery($query);
     }
 
     public function insertUsuario($usuario=array()){

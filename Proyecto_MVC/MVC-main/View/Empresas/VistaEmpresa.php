@@ -83,11 +83,11 @@
 
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa-regular fa-user"></i> <?=isset($_SESSION['login_data']['Nombres'])? $_SESSION['login_data']['Nombres']:' Cuenta' ?>
+        <i class="fa-regular fa-user"></i> <?=isset($_SESSION['login_data']['Nombre_Contacto'])? $_SESSION['login_data']['Nombre_Contacto']:' Cuenta' ?>
         </button>
         <ul class="dropdown-menu dropdown-menu-dark">
         <?php
-            if(!isset($_SESSION['login_data']['Nombres'])){            
+            if(!isset($_SESSION['login_data']['Nombre_Contacto'])){            
             ?>
           <li><a class="dropdown-item" href="<?= PATH ?>/Usuarios/login">Iniciar Session</a></li>
           <?php
@@ -116,13 +116,13 @@
         <div class="h-100 p-5 text-bg-dark rounded-3 ">
           <center>
             <h1>Administracion</h1>
-            <p>Bienvenido <?=$_SESSION['login_data']['Nombres']?>, se encuentra en la interfaz administrativa.</p>
+            <h1><?=$_SESSION['login_data']['Nombre_Empresa']?></h1>
+            <p>Bienvenido <?=$_SESSION['login_data']['Nombre_Contacto']?>, se encuentra en la interfaz administrativa para empresas.</p>
           </center>
           <div class="d-flex justify-content-around">
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Empresas/index"><i class="fa-solid fa-building fa-lg"></i></i> Gestion de Empresas</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Rubros/index"><i class="fa-solid fa-pen-to-square fa-lg"></i>  Gestion de Rubros</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Usuarios/index"><i class="fa-solid fa-user-pen fa-lg"></i>  Detalle de Clientes</a>
-            <a type="button" class="btn btn-light" href="<?=PATH?>/Cupones/detalles"><i class="fa-solid fa-chart-column fa-lg"></i>  Detalle de Ofertas</a>
+            <a type="button" class="btn btn-light" href="<?=PATH.'/Cupones/Create/'.$_SESSION['login_data']['ID_Empresa']?>"><i class="fa-solid fa-plus fa-lg"></i> Nueva Oferta</a>
+            <a type="button" class="btn btn-light" href="<?=PATH?>/Empresas/Empleados"><i class="fa-solid fa-pen-to-square fa-lg"></i>  Gestion de Empleados</a>
+            <a type="button" class="btn btn-light" href="<?=PATH.'/Cupones/detallesEmpresa/'.$_SESSION['login_data']['ID_Empresa']?>"><i class="fa-solid fa-chart-column fa-lg"></i>  Detalle de Ofertas</a>
           </div>
         </div>
       </div>
@@ -153,7 +153,8 @@
                     <th>Acciones</th>
                 </thead>
                 <tbody>
-                    <?php                   
+                    <?php
+                    //var_dump($_SESSION['login_data']['ID_Empresa']);
                     foreach($ofertas as $oferta){                      
                     ?>
                     <tr>
@@ -166,8 +167,8 @@
                         <td><?=$oferta['Estado_Oferta']?></td>
                         <td><?=$oferta['id_empresa']?></td>
                         <td>
-                          <a type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#modal" href="javascript:void(0)" onclick="detalles('<?=$oferta['ID_Oferta']?>')"><i class="fa-regular fa-eye"></i> Ver</a>
-                          <a type="button" class="btn btn-primary m-2" href="<?= PATH.'/Cupones/edit/'.$oferta['ID_Oferta']?>"><i class="fa-solid fa-pen-to-square"></i> Editar</a>                   
+                          <a type="button" class="btn btn-primary m-2" href="<?= PATH.'/Cupones/EditCuponEmpresa/'.$oferta['ID_Oferta']?>"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                             
                         </td>
                     </tr>
                     <?php          
@@ -197,36 +198,6 @@
     $(document).ready(function () {
         $('#tabla').DataTable();
     });
-    
-    function detalles(id){
-        $.ajax({
-            url:"<?=PATH?>/Cupones/details/"+id,
-            type:"GET",
-            dataType:"JSON",
-            success: function(datos){
-                $('#nombre').text(datos.Titulo_Oferta);
-                $('#precio_regular').text(datos.Precio_Regular);
-                $('#precio_oferta').text(datos.Precio_Oferta);
-                <?php
-                foreach($empresas as $empresa){
-                ?>
-                if(datos.id_empresa == '<?=$empresa['ID_Empresa']?>'){
-                  datos.id_empresa = '<?=$empresa['Nombre_Empresa']?>';               
-                }
-                <?php      
-                }
-                ?>
-                $('#empresa').text(datos.id_empresa);
-                if(datos.Cantidad_Cupones == null){
-                  datos.Cantidad_Cupones = "Hasta terminar Fecha limite"
-                }
-                $('#existencias').text(datos.Cantidad_Cupones);
-                $('#descripcion').text(datos.Descripcion);
-                $('#modal').modal('show');
-                $('.titulo-modal').text(datos.Titulo_Oferta);
-            }
-        })
-    }
 </script>
 
   </body>

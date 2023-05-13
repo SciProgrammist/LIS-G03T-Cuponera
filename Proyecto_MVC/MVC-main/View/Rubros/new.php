@@ -115,7 +115,7 @@
 
       <div class="col-md-12">
         <div class="h-100 p-5 text-bg-dark rounded-3 ">
-          <center><h1>Editar Empresa</h1> <i class="fa-solid fa-building fa-2xl"></i></i></center>
+          <center><h1>Nuevo Rubro</h1> <i class="fa-solid fa-list fa-2xl"></i></i></center>
         </div>
       </div>
     
@@ -147,83 +147,19 @@
 
     <div class="row align-items-md-stretchS py-4">
         
-        <form role="form "action="<?= PATH ?>/Empresas/update" method="POST">
+        <form role="form "action="<?= PATH ?>/Rubros/add" method="POST">
 
             <div class="row my-2">
 
-            <div class="form-group col-md-4 m-3">
-                <label for="codigo">Codigo de la Empresa:</label>
+            <div class="form-group col-md-6 m-3">
+                <label for="Nombre">Rubro:</label>
                 <div class="input-group my-2">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" readonly="true" name="ID_Empresa" id="ID_Empresa" placeholder="Ingresa el Codigo la Empresa" value="<?= isset($empresa)?$empresa['ID_Empresa']:'' ?>" >
+                    <input type="text" class="form-control" name="Nombre_Rubro" id="Nombre_Rubro" placeholder="Ingresa el nombre del Rubro" value="<?= isset($rubro)?$rubro['Nombre_Rubro']:'' ?>" >
                 </div>
             </div>
 
-            <div class="form-group col-md-4 m-3">
-                <label for="Nombre_Empresa">Nombre de la Empresa:</label>
-                <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" name="Nombre_Empresa" id="Nombre_Empresa" placeholder="Ingresa el Nomnre de la Empresa" value="<?= isset($empresa)?$empresa['Nombre_Empresa']:'' ?>" >
-                </div>
-            </div>
-
-            <div class="form-group col-md-4 m-3">
-                <label for="Direccion">Direccion:</label>
-                <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" name="Direccion" id="Direccion" placeholder="Ingresa una Direccion" value="<?= isset($empresa)?$empresa['Direccion']:'' ?>" >
-                </div>
-            </div>
-
-            <div class="form-group col-md-4 m-3">
-                <label for="Nombre_Contacto">Contacto:</label>
-                <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-star-of-life"></i></span>
-                    <input type="text" class="form-control" name="Nombre_Contacto" id="Nombre_Contacto" placeholder="Ingresa una nombre para su Contacto" value="<?= isset($empresa)?$empresa['Nombre_Contacto']:'' ?>" >
-                </div>
-            </div>
-
-            <div class="form-group col-md-4 m-3">
-                <label for="Telefono">Telefono:</label>
-                <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-phone"></i></span>
-                    <input type="text" class="form-control" name="Telefono" id="Telefono" placeholder="Ingresar un numero Telefonico" value="<?= isset($empresa)?$empresa['Telefono']:'' ?>" >
-                </div>
-            </div>
-
-            <div class="form-group col-md-4 m-3">
-                <label for="Correo">Correo:</label>
-                <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
-                    <input type="email" class="form-control" name="Correo" id="Correo" placeholder="correo electronico: name@example.com" value="<?= isset($empresa)?$empresa['Correo']:'' ?>" >
-                </div>
-            </div>
-        
-            <div class="form-group col-md-4 m-3">
-                <label for="Rubro">Rubro:</label>
-                <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-building fa-lg"></i></span>
-
-                    <select id="Rubro" name="Rubro" class="form-select" >
-                        <?php
-                        foreach($rubros as $rubro){
-                            ?>
-                        <option value="<?=$rubro['ID_Rubro']?>" <?=$empresa['Rubro']==$rubro['ID_Rubro']?'Selected' : ''?>><?=$rubro['Nombre_Rubro']?></option>
-                        <?php } ?>                                     
-                    </select>
-
-                </div>
-            </div>
-
-            <div class="form-group col-md-4 m-3">
-                <label for="Porcentaje_Comision">Porcentaje de Comision:</label>
-                <div class="input-group my-2">
-                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-percent"></i></span>
-                    <input type="number" class="form-control" name="Porcentaje_Comision" id="Porcentaje_Comision" step="0.01" min="0" placeholder="Ingresa el Precio Regular de la Oferta" value="<?= isset($empresa)?$empresa['Porcentaje_Comision']:'' ?>" >
-                </div>
-            </div>
-
-
+           
             </div>
 
             <input type="submit" class="btn btn-primary" value="Guardar" name="Guardar">

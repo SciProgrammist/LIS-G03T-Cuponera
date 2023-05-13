@@ -15,5 +15,21 @@ class RubrosModel extends Model{
         
     }
 
+    public function insertRubros($rubro=array()){
+        $query="INSERT INTO rubros VALUES (:ID_Rubro,:Nombre_Rubro)";
+        return $this->setQuery($query,$rubro);
+
+    }
+
+    public function updateRubros($rubro=array()){
+        $query="UPDATE rubros SET Nombre_Rubro=:Nombre_Rubro  WHERE ID_Rubro=:ID_Rubro";
+        return $this->setQuery($query,$rubro);
+
+    }
+
+    public function removeRubros($id){
+        $query="DELETE FROM rubros WHERE ID_Rubro=:ID_Rubro";
+        return $this->setQuery($query,['ID_Rubro'=>$id]);
+    }
   
 }
